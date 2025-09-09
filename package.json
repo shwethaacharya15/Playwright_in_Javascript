@@ -2,14 +2,29 @@
   "name": "playwright_javascript",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shwethaacharya15/Playwright_in_Javascript.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
+  "bugs": {
+    "url": "https://github.com/shwethaacharya15/Playwright_in_Javascript/issues"
+  },
+  "homepage": "https://github.com/shwethaacharya15/Playwright_in_Javascript#readme",
   "devDependencies": {
-    "playwright": "^1.54.2"
-  }
+    "@playwright/test": "^1.55.0",
+    "@types/node": "^24.3.0"
+  },
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {
+    "playwright": "^1.55.0",
+    "playwright-core": "^1.55.0",
+    "undici-types": "^7.10.0"
+  },
+  "description": ""
 }
