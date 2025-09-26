@@ -6,19 +6,31 @@ import { defineConfig, devices } from '@playwright/test';
  */
 export default defineConfig({
   testDir: './tests',
-  timeout: 60000,           // per-test timeout
-  fullyParallel: true,      // run tests in parallel
+  timeout: 60 * 1000, // 1 minute per test
+  expect: {
+    timeout: 5000, // assertion timeout
+  },
+  fullyParallel: true,
   forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 2 : 1,  // retry once locally, twice on CI
+  retries: process.env.CI ? 2 : 1,
   workers: process.env.CI ? 1 : undefined,
-  reporter: [['html', { open: 'on-failure' }]],
+
+  // Reporters
+  reporter: [
+    ['list'],                                // console
+    ['html', { open: 'on-failure' }],        // default html
+    ['allure-playwright'],                   // allure (run: npx allure generate allure-results)
+  ],
 
   use: {
-    headless: false,               // run headed
+    headless: true,                   // headless by default
+    actionTimeout: 15 * 1000,         // step timeout
+    navigationTimeout: 30 * 1000,
     ignoreHTTPSErrors: true,
-    screenshot: 'only-on-failure', // screenshot on failure
-    video: 'retain-on-failure',    // record video on failure
-    trace: 'on-first-retry',       // generate trace on retry
+    screenshot: 'only-on-failure',
+    video: 'retain-on-failure',
+    trace: 'on-first-retry',          // trace only when retried
+    baseURL: 'https://restful-booker.herokuapp.com', // 👈 API baseURL
   },
 
   projects: [
@@ -42,9 +54,19 @@ export default defineConfig({
       name: 'Mobile Chrome',
       use: { ...devices['Pixel 5'] },
     },
+    {
+      name: 'API Tests',             // separate API project
+      testDir: './tests/api',        // API folder
+      use: { baseURL: 'https://restful-booker.herokuapp.com' },
+    },
+    {
+      name: 'UI Tests',              //  separate UI project
+      testDir: './tests/ui',         // UI folder (POM)
+      use: { ...devices['Desktop Chrome'] },
+    },
   ],
 
-  /* Optional: start local server before tests */
+  // Optional: local server setup for UI apps
   // webServer: {
   //   command: 'npm run start',
   //   url: 'http://localhost:3000',

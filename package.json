@@ -15,8 +15,9 @@
   },
   "homepage": "https://github.com/shwethaacharya15/Playwright_in_Javascript#readme",
   "devDependencies": {
-    "@playwright/test": "^1.55.0",
-    "@types/node": "^24.3.0"
+    "@playwright/test": "^1.55.1",
+    "@types/node": "^24.3.0",
+    "allure-playwright": "^3.4.1"
   },
   "directories": {
     "test": "tests"
